@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Example 3 - Knockout + Mediator</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="knockout-2.0.0.js"></script>
+    <script type="text/javascript" src="underscore-min.js"></script>
+</head>
+<body>
+
+
+
+<div class="navigation">
+    <div data-bind="foreach: objects">
+        <div class="item" data-bind="text: label, click: selectMe, css: {selected: selected }"></div>
+    </div>
+
+    <div id="unselectAllItems">Unselect All</div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+window.navMediator = {
+
+    navViewModel: {},
+
+    setup: function() {
+        navViewModel = {
+            objects: ko.observableArray([
+                {label: "First", id: 1},
+                {label: "Second", id: 2},
+                {label: "Third", id: 3}
+            ])
+        }
+
+        for(ob in navViewModel.objects()) {
+            object = navViewModel.objects()[ob]
+
+            object.selected = ko.observable(false)
+
+            object.selectMe = function() {
+
+                // We're going to use some underscore here
+                // Think of filter as find_all or where
+                // Find the other items
+                otherItems = _.filter(navViewModel.objects(), function(item) {
+                    return item.id != this.id
+                })
+
+                // Unselect them by calling a function on each
+                _.each(otherItems, function(item) {
+                    item.selected(false)
+                })
+
+                this.selected(true)
+            }
+        }
+    },
+
+    unselectAll: function(){
+        // Loop through each item and unselect it
+        _.each(navViewModel.objects(), function(item) {
+            item.selected(false)
+        })
+    },
+
+
+    render: function(){
+        ko.applyBindings(navViewModel, $('.navigation')[0])
+    }
+}
+
+
+$(function() {
+    navMediator = window.navMediator
+    navMediator.setup()
+    navMediator.render()
+
+    // Let's bind the unselect all to call a method on the mediator
+    $('#unselectAllItems').click(function(){
+        navMediator.unselectAll()
+    })
+})
+</script>
+
+</body>
+</html>

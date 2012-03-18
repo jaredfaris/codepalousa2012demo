@@ -1,0 +1,47 @@
+<script type="text/javascript">
+
+
+
+    $('.nav-button').click(function(){
+        questionId = //Some Code
+        $('.question-' + questionId).toggle()
+    })
+
+
+    $('.user-list .nav-button').click(function(){
+        userId = // Some Code
+        $('.user-' + userId).toggle()
+    })
+
+    $('.nav-collapse-icon').click(function() {
+        $(this).next().toggle()
+    })
+
+
+
+    // Publishing
+    var selectChannel = postal.channel("channelName", "topicName")
+    selectChannel.publish({key: value, key2: value2})
+
+
+    // Subscribing
+    var selectChannel = postal.channel("channelName", "topicName")
+    var subscription = selectChannel.subscribe(function(data) {
+        // Do stuff
+    })
+
+</script>
+
+        
+<script type="text/html" id="myTemplate">
+    <ul class="nav-list" data-bind="foreach: navItems">
+        <li data-bind="css: {selected: selected}">
+            <a data-bind="attr: {href: '?uid=' + value }, click: itemSelected">
+                <span data-bind="text: label"></span>
+            </a>
+        </li>
+    </ul>
+</script>
+
+
+

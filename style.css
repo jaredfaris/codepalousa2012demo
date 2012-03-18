@@ -1,0 +1,29 @@
+.navigation {
+    float: left;
+    width: 150px;
+    border: 1px solid blue;
+    font: 12px/18px arial;
+}
+
+.navigation .item {
+    width: 150px;
+}
+
+.navigation .item.selected {
+    background-color: gray;
+}
+
+.navigation #unselectAllItems {
+    margin-top: 20px;
+}
+
+
+.report{
+    float: left;
+    margin-left: 25px;
+    border: 1px solid red;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+}
